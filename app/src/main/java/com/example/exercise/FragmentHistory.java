@@ -14,10 +14,12 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -88,6 +90,27 @@ public class FragmentHistory extends Fragment {
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
+                    });
+
+                    //순위 매기기 쿼리
+                    Query myMostViewedPostsQuery = mDatabaseRef.child("UserData")
+                            .orderByChild(str_date + "/time");
+                    myMostViewedPostsQuery.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {}
+                        // [END_EXCLUDE]
                     });
                 } else {
                     // No user is signed in
