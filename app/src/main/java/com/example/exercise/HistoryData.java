@@ -7,4 +7,20 @@ public class HistoryData {
     private String bodyfat; //체지방률
     private String cal; //칼로리 소모량
     private String time; //운동시간
+
+    public Date getDate() { return date; }
+
+    public String getBodyfat() { return bodyfat; }
+
+    public String getCal() { return cal; }
+
+    public String getTime() { return time; }
+
+    public void setBodyfat(String bodyfat) { this.bodyfat = bodyfat; }
+
+    public void setCal(String cal) { this.cal = cal; }
+
+    public void setDate(Date date) { this.date = date; }
+
+    public void setTime(String time) { this.time = time; }
 }

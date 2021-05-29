@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.sql.DatabaseMetaData;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText edit_name, edit_pw, edit_email;
+    EditText edit_name, edit_pw, edit_email, edit_cm, edit_kg;
     Button btn_signup;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef;
@@ -38,6 +38,8 @@ public class SignUpActivity extends AppCompatActivity {
         edit_name = findViewById(R.id.edit_name);
         edit_pw = findViewById(R.id.edit_pw);
         edit_email = findViewById(R.id.edit_email);
+        edit_cm = findViewById(R.id.edit_cm);
+        edit_kg = findViewById(R.id.edit_kg);
 
         btn_signup = findViewById(R.id.btn_signup);
 
@@ -50,6 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
                 String strName = edit_name.getText().toString();
                 String strPw = edit_pw.getText().toString();
                 String strEmail = edit_email.getText().toString();
+                String strCm = edit_cm.getText().toString();
+                String strKg = edit_kg.getText().toString();
 
                 mAuth.createUserWithEmailAndPassword(strEmail, strPw).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -61,6 +65,8 @@ public class SignUpActivity extends AppCompatActivity {
                             userData.setName(strName);
                             userData.setEmail(firebaseUser.getEmail());
                             userData.setPw(strPw);
+                            userData.setCm(strCm);
+                            userData.setKg(strKg);
 
                             mDatabaseRef.child("UserData").child(firebaseUser.getUid()).setValue(userData);
                             Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
