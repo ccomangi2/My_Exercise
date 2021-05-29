@@ -2,6 +2,7 @@ package com.example.exercise;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -22,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -65,6 +70,7 @@ public class FragmentData extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String str_yy = String.valueOf(mYear);
                 String str_mm = String.valueOf(mMonth);
                 String str_dd = String.valueOf(mDay);
@@ -72,9 +78,35 @@ public class FragmentData extends Fragment {
                 String str_cal = tv_cal.getText().toString();
                 String str_bmi = tv_bmi.getText().toString();
                 String str_date = str_yy + "-" + str_mm + "-" + str_dd;
+
                 if(str_time != null) {
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
                     if (firebaseUser != null) {
+                        mDatabaseRef.child("UserData").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    UserData userData = dataSnapshot.getValue(UserData.class);
+                                    int time = Integer.parseInt(str_time);
+                                    assert userData != null;
+                                    double cm = Double.parseDouble(userData.getCm());
+                                    double kg = Double.parseDouble(userData.getKg());
+                                    double bmi = kg/((cm/100)*(cm/100));
+                                    String str_bmi = String.format("%.2f", bmi);
+                                    int cal = (int) (0.035*kg*time);
+
+                                    tv_bmi.setText(str_bmi);
+                                    tv_cal.setText(String.valueOf(cal));
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
                         HistoryData historyData = new HistoryData();
                         historyData.setDate(str_date);
                         historyData.setTime(str_time);
@@ -110,6 +142,8 @@ public class FragmentData extends Fragment {
                     } else {
                         // No user is signed in
                     }
+                } else {
+                    Toast.makeText(getContext(), "운동 시간을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

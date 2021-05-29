@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:background="@color/white"
-            android:text="100"
+            android:text="00"
             android:textColor="@color/main"
             android:textSize="20sp" />
         <TextView
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:background="@color/white"
-            android:text="100"
+            android:text="00"
             android:textColor="@color/main"
             android:textSize="20sp" />
 
