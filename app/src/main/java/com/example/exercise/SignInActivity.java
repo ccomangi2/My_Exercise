@@ -8,9 +8,14 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
 public class SignInActivity extends AppCompatActivity {
     EditText edit_id, edit_pw;
     Button btn_signin, btn_signup;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabaseRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
