@@ -64,7 +64,6 @@ public class SignUpActivity extends AppCompatActivity {
                             userData.setIdToken(firebaseUser.getUid());
                             userData.setName(strName);
                             userData.setEmail(firebaseUser.getEmail());
-                            userData.setPw(strPw);
                             userData.setCm(strCm);
                             userData.setKg(strKg);
 

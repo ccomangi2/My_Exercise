@@ -42,20 +42,24 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String strPw = edit_pw.getText().toString();
                 String strEmail = edit_id.getText().toString();
-
-                mAuth.signInWithEmailAndPassword(strEmail, strPw).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            gotoActivity(MainActivity.class);
-                            finish();
-                        } else {
-                            Toast.makeText(SignInActivity.this, "아이디와 비밀번호가 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                if (strPw.length() != 0 || strEmail.length() !=0) {
+                    mAuth.signInWithEmailAndPassword(strEmail, strPw).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()) {
+                                gotoActivity(MainActivity.class);
+                                finish();
+                            } else {
+                                Toast.makeText(SignInActivity.this, "아이디와 비밀번호가 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    Toast.makeText(SignInActivity.this, "아이디와 비밀번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

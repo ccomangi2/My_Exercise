@@ -10,6 +10,15 @@ public class UserData {
 
     public UserData() { }
 
+    public UserData(String idToken, String Name, String Pw, String Email, String cm, String kg) {
+        this.idToken = idToken;
+        this.Name = Name;
+        this.Pw = Pw;
+        this.Email = Email;
+        this.cm = cm;
+        this.kg = kg;
+    }
+
     public String getIdToken() { return idToken; }
 
     public String getEmail() { return Email; }
