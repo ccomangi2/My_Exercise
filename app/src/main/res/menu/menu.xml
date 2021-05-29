@@ -10,8 +10,4 @@
         android:enabled="true"
         android:title="나의 기록"/>
 
-    <item
-        android:id="@+id/rank"
-        android:enabled="true"
-        android:title="순위"/>
 </menu>

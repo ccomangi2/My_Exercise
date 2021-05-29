@@ -3,7 +3,6 @@ package com.example.exercise;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -26,12 +25,9 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,new FragmentData()).commit();
                         break;
                     case R.id.history:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,new FragmentHistroy()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,new FragmentHistory()).commit();
                         break;
-                    case R.id.rank:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,new FragmentRank()).commit();
-                        break;
-                }
+                                  }
                 return true;
             }
         });

@@ -70,16 +70,13 @@ public class FragmentData extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String str_yy = String.valueOf(mYear);
-                String str_mm = String.valueOf(mMonth);
+                String str_mm = String.valueOf(mMonth+1);
                 String str_dd = String.valueOf(mDay);
                 String str_time = edit_time.getText().toString();
-                String str_cal = tv_cal.getText().toString();
-                String str_bmi = tv_bmi.getText().toString();
                 String str_date = str_yy + "-" + str_mm + "-" + str_dd;
 
-                if(str_time != null) {
+                if(str_time.length() != 0) {
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
                     if (firebaseUser != null) {
                         mDatabaseRef.child("UserData").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -97,6 +94,39 @@ public class FragmentData extends Fragment {
 
                                     tv_bmi.setText(str_bmi);
                                     tv_cal.setText(String.valueOf(cal));
+
+                                    HistoryData historyData = new HistoryData();
+                                    historyData.setDate(str_date);
+                                    historyData.setTime(str_time);
+                                    historyData.setCal(String.valueOf(cal));
+                                    historyData.setBodyfat(str_bmi);
+                                    mDatabaseRef.child("UserData").child(firebaseUser.getUid()).child(str_date).setValue(historyData);
+                                    mChildEventListener = new ChildEventListener() {
+                                        @Override
+                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    };
                                 }
                             }
 
@@ -105,40 +135,6 @@ public class FragmentData extends Fragment {
 
                             }
                         });
-
-
-                        HistoryData historyData = new HistoryData();
-                        historyData.setDate(str_date);
-                        historyData.setTime(str_time);
-                        historyData.setCal(str_cal);
-                        historyData.setBodyfat(str_bmi);
-                        mDatabaseRef.child("UserData").child(firebaseUser.getUid()).child(str_date).setValue(historyData);
-                        mChildEventListener = new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        };
                     } else {
                         // No user is signed in
                     }
