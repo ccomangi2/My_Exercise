@@ -93,11 +93,31 @@ public class FragmentHistory extends Fragment {
                     });
 
                     //순위 매기기 쿼리
-                    Query myMostViewedPostsQuery = mDatabaseRef.child("UserData")
-                            .orderByChild(str_date + "/time");
-                    myMostViewedPostsQuery.addChildEventListener(new ChildEventListener() {
+                    mDatabaseRef.child("UserData").orderByChild(str_date).addChildEventListener(new ChildEventListener() {
                         @Override
-                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            for(DataSnapshot datas: dataSnapshot.getChildren()){
+                                s = datas.child("time").getValue(String.class);
+                                int[] time_score = new int[100];
+                                int[] rank = new int[100];
+                                if(s != null && !s.isEmpty()){
+                                    for(int i = 0; i < time_score.length; i++) {
+                                        time_score[i] = Integer.parseInt(s);
+                                        rank[i] = 1;
+                                        for (int j = 0; j < time_score.length; j++) {
+                                            time_score[j] = Integer.parseInt(s);
+                                            if(time_score[i] < time_score[j]) {
+                                                rank[i]++;
+                                            }
+                                        }
+                                    }
+                                    for (int i = 0; i < time_score.length; i++) {
+                                        tv_rank.setText(String.valueOf(rank[i]));
+                                    }
+                                }
+                                else{}
+                            }
+                        }
 
                         @Override
                         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
