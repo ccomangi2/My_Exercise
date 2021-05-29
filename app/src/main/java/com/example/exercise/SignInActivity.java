@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignInActivity extends AppCompatActivity {
+    //변수 선언
     EditText edit_id, edit_pw;
     Button btn_signin, btn_signup;
     private FirebaseAuth mAuth;
@@ -28,21 +29,24 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        edit_id = findViewById(R.id.edit_id);
-        edit_pw = findViewById(R.id.edit_pw);
+        edit_id = findViewById(R.id.edit_id); //이메일 아이디 입략란
+        edit_pw = findViewById(R.id.edit_pw); //비밀번호 입력란
 
-        btn_signin = findViewById(R.id.btn_signin);
-        btn_signup = findViewById(R.id.btn_signup);
+        btn_signin = findViewById(R.id.btn_signin); //로그인 버튼
+        btn_signup = findViewById(R.id.btn_signup); //회원가입 버튼
 
+        //파이어베이스를 위한
         mAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("exercise");
 
+        //로그인 버튼 누를 시
         btn_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String strPw = edit_pw.getText().toString();
                 String strEmail = edit_id.getText().toString();
-                if (strPw.length() != 0 || strEmail.length() !=0) {
+                //아이디와 비밀번호 둘 다 공백이 아닐 경우
+                if (strPw.length() != 0 && strEmail.length() !=0) {
                     mAuth.signInWithEmailAndPassword(strEmail, strPw).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -60,6 +64,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        //회원가입 버튼 누를시
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +72,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
+    //액티비티 이동 메서드
     public void gotoActivity(Class c) {
         Intent intent = new Intent(getApplicationContext(), c);
         startActivity(intent);

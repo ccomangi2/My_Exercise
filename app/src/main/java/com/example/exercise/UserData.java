@@ -11,12 +11,12 @@ public class UserData {
     public UserData() { }
 
     public UserData(String idToken, String Name, String Pw, String Email, String cm, String kg) {
-        this.idToken = idToken;
-        this.Name = Name;
-        this.Pw = Pw;
-        this.Email = Email;
-        this.cm = cm;
-        this.kg = kg;
+        this.idToken = idToken; //사용자 고유 IdToken
+        this.Name = Name; //사용자 이름
+        this.Pw = Pw; //비밀번호
+        this.Email = Email; //아이디이자 이메일
+        this.cm = cm; //키
+        this.kg = kg; //몸무게
     }
 
     public String getIdToken() { return idToken; }

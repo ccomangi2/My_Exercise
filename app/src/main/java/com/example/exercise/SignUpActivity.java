@@ -19,9 +19,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.sql.DatabaseMetaData;
 
 public class SignUpActivity extends AppCompatActivity {
+    //변수 선언
     EditText edit_name, edit_pw, edit_email, edit_cm, edit_kg;
     Button btn_signup;
     private FirebaseAuth mAuth;
@@ -31,34 +31,36 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("회원가입");
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        edit_name = findViewById(R.id.edit_name); //이름
+        edit_pw = findViewById(R.id.edit_pw); //비밀번호
+        edit_email = findViewById(R.id.edit_email); //아이디이자 이메일
+        edit_cm = findViewById(R.id.edit_cm); //키
+        edit_kg = findViewById(R.id.edit_kg); //몸무게
 
-        edit_name = findViewById(R.id.edit_name);
-        edit_pw = findViewById(R.id.edit_pw);
-        edit_email = findViewById(R.id.edit_email);
-        edit_cm = findViewById(R.id.edit_cm);
-        edit_kg = findViewById(R.id.edit_kg);
+        btn_signup = findViewById(R.id.btn_signup); //회원가입 버튼
 
-        btn_signup = findViewById(R.id.btn_signup);
-
+        //파이어베이스를 위한
         mAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("exercise");
 
+        //회원가입 버튼 누를 시
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //String 변수에 내용을 넣어줌
                 String strName = edit_name.getText().toString();
                 String strPw = edit_pw.getText().toString();
                 String strEmail = edit_email.getText().toString();
                 String strCm = edit_cm.getText().toString();
                 String strKg = edit_kg.getText().toString();
-
+                
+                //사용자 데이터베이스에 등록
                 mAuth.createUserWithEmailAndPassword(strEmail, strPw).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //성공시
                         if(task.isSuccessful()) {
+                            //사용자 정보 저장
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
                             UserData userData = new UserData();
                             userData.setIdToken(firebaseUser.getUid());
@@ -70,7 +72,9 @@ public class SignUpActivity extends AppCompatActivity {
                             mDatabaseRef.child("UserData").child(firebaseUser.getUid()).setValue(userData);
                             Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
                             gotoActivity(SignInActivity.class);
-                        } else {
+                        } 
+                        //실패시
+                        else {
                             Toast.makeText(SignUpActivity.this, "비밀번호를 6자 이상 입력해 주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -78,6 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+    //액티비티 이동 메서드
     public void gotoActivity(Class c) {
         Intent intent = new Intent(getApplicationContext(), c);
         startActivity(intent);

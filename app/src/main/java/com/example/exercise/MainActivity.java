@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //BottomNavigation 설정
         getSupportFragmentManager().beginTransaction().add(R.id.container,new FragmentData()).commit();
         BottomNavigationView mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.history:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,new FragmentHistory()).commit();
                         break;
-                                  }
+                }
                 return true;
             }
         });
