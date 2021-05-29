@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="150dp"
         android:calendarViewShown="false"
         android:theme="@style/DatePicker"
         android:datePickerMode="spinner" />
@@ -127,6 +127,7 @@
         android:layout_marginRight="70dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/btn_custom"
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:text="기록 저장" />
 </RelativeLayout>

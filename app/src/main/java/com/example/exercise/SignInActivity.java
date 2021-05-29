@@ -71,4 +71,8 @@ public class SignInActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), c);
         startActivity(intent);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

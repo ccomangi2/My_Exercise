@@ -135,6 +135,7 @@ public class FragmentData extends Fragment {
 
                             }
                         });
+                        Toast.makeText(getContext(), "기록하였습니다.", Toast.LENGTH_SHORT).show();
                     } else {
                         // No user is signed in
                     }

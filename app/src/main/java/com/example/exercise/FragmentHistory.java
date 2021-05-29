@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -28,7 +29,7 @@ import java.util.GregorianCalendar;
 
 public class FragmentHistory extends Fragment {
     private int mYear = 0, mMonth = 0, mDay = 0;
-    TextView tv_time, tv_cal, tv_bmi;
+    TextView tv_time, tv_cal, tv_bmi, tv_rank;
     Button search;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef;
@@ -40,6 +41,7 @@ public class FragmentHistory extends Fragment {
         tv_time = v.findViewById(R.id.tv_time);
         tv_cal = v.findViewById(R.id.tv_cal);
         tv_bmi = v.findViewById(R.id.tv_bmi);
+        tv_rank = v.findViewById(R.id.tv_rank);
 
         search = v.findViewById(R.id.search);
 
